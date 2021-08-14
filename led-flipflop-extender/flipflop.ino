@@ -2,7 +2,7 @@
 const int FLIPFLOP_PINS_NUMBER = 8;
 
 // The numbers of the flipflop data pins on the board.
-const int FLIPFLOP_DATA_PINS[FLIPFLOP_PINS_NUMBER] = {2, 3, 4, 5, 6, 7, 8, 9};
+const int FLIPFLOP_DATA_PINS[FLIPFLOP_PINS_NUMBER] = {0, 1, 2, 3, 4, 5, 6, 7};
 
 // A constant array of lows to use to set all pins of the flipflop to zero.
 int flipFlopZeroStates[FLIPFLOP_PINS_NUMBER];
@@ -21,6 +21,10 @@ void FlipFlopInit(){
 
   BulkPinMode(FLIPFLOP_PINS_NUMBER, FLIPFLOP_DATA_PINS, OUTPUT);
 
+  for(int i = 0; i < NUMBER_OF_FLIP_FLOP_ICS; i++){
+    FlipFlopWrite(0, i);
+  }
+
   BulkDigitalWrite(FLIPFLOP_PINS_NUMBER, FLIPFLOP_DATA_PINS, flipFlopZeroStates);
 }
 
@@ -29,9 +33,7 @@ void FlipFlopInit(){
  * value of ledsMap. The decoder index is used to specify the flipFlop to rite to.
 */
 bool FlipFlopWrite(byte ledsMap, int decoderIndex){
-  ConvertIntToPinStates(ledsMap, FLIPFLOP_PINS_NUMBER, flipFlopsStates);
-
-  BulkDigitalWrite(FLIPFLOP_PINS_NUMBER, FLIPFLOP_DATA_PINS, flipFlopsStates);
+  PORTD = ledsMap;
 
   return decoderWrite(decoderIndex);
 }

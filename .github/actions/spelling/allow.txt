@@ -5,6 +5,9 @@ http
 https
 instructables
 microcontrollers
+portb
+portc
+portd
 println
 todo
 ubuntu

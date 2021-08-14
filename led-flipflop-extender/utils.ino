@@ -37,6 +37,6 @@ void ConvertIntToPinStates(byte number, int arrayLength, int _array[]){
 void logToSerial(String msg, int _debugLevel)
 {
   if (debugLevel >= _debugLevel){
-    Serial.println(msg);
+    logSerial.println(msg);
   }
 }

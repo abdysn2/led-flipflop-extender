@@ -1,11 +1,14 @@
 // The number of the decoder input pins.
 const int D_PINS_NUMBER = 3;
 
+// The number of flipFlop chips
+const int NUMBER_OF_FLIP_FLOP_ICS = pow(2, D_PINS_NUMBER);
+
 // The decoder input pins on the board.
-const int DECODER_INPUT_PINS[D_PINS_NUMBER] = {10, 11, 12};
+const int DECODER_INPUT_PINS[D_PINS_NUMBER] = {8, 9, 10};
 
 // The decoder enable pin on the board.
-const int DECODER_ENABLE_PIN = 13;
+const int DECODER_ENABLE_PIN = 11;
 
 // Enable pin low state
 const int DECODER_ENABLE_PIN_LOW_STATE = LOW;
@@ -40,17 +43,15 @@ void DecoderInit(){
  * them to the decoder.
 */
 bool decoderWrite(int number){
-  int maxAllowedNumber = pow(2, D_PINS_NUMBER) - 1;
+  int maxAllowedNumber = NUMBER_OF_FLIP_FLOP_ICS - 1;
   if (number > maxAllowedNumber){
     logToSerial("ERROR: number: " + (String)number + "is higher than " + (String)maxAllowedNumber + ".", 2);
     return false;
   }
 
-  ConvertIntToPinStates(number, D_PINS_NUMBER, decoderStates);
-
   digitalWrite(DECODER_ENABLE_PIN, DECODER_ENABLE_PIN_LOW_STATE);
 
-  BulkDigitalWrite(D_PINS_NUMBER, DECODER_INPUT_PINS, decoderStates);
+  PORTB = number;
 
   digitalWrite(DECODER_ENABLE_PIN, DECODER_ENABLE_PIN_HIGH_STATE);
 
