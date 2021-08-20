@@ -1,9 +1,3 @@
-// The number of data pins of the flipflop IC.
-const int FLIPFLOP_PINS_NUMBER = 8;
-
-// The numbers of the flipflop data pins on the board.
-const int FLIPFLOP_DATA_PINS[FLIPFLOP_PINS_NUMBER] = {0, 1, 2, 3, 4, 5, 6, 7};
-
 // A constant array of lows to use to set all pins of the flipflop to zero.
 int flipFlopZeroStates[FLIPFLOP_PINS_NUMBER];
 
