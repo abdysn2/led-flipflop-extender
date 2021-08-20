@@ -1,21 +1,3 @@
-// The number of the decoder input pins.
-const int D_PINS_NUMBER = 3;
-
-// The number of flipFlop chips
-const int NUMBER_OF_FLIP_FLOP_ICS = pow(2, D_PINS_NUMBER);
-
-// The decoder input pins on the board.
-const int DECODER_INPUT_PINS[D_PINS_NUMBER] = {8, 9, 10};
-
-// The decoder enable pin on the board.
-const int DECODER_ENABLE_PIN = 11;
-
-// Enable pin low state
-const int DECODER_ENABLE_PIN_LOW_STATE = LOW;
-
-// Enable pin high state
-const int DECODER_ENABLE_PIN_HIGH_STATE = HIGH;
-
 // An array of lows to use to set all pins of the decoder to zero.
 int decoderZeroStates[D_PINS_NUMBER];
 
