@@ -28,6 +28,13 @@ FlipFlopsStates<NUMBER_OF_FLIP_FLOP_ICS> *sequence1FlipFlopStates = new FlipFlop
 
 StaticSequence<NUMBER_OF_FLIP_FLOP_ICS> sequence1 =  StaticSequence<NUMBER_OF_FLIP_FLOP_ICS>(sequence1FlipFlopStates, numberOfStates);
 
+const int NUMBER_OF_STATES = 4;
+int unifiedDelay = 1000;
+int flipFlopRepetitiveStates[NUMBER_OF_STATES] = {0b00000001, 0b00000100, 0b00010000, 0b01000000};
+int flipFlopRepetitiveDelays[NUMBER_OF_STATES] = {unifiedDelay, unifiedDelay, unifiedDelay, unifiedDelay};
+
+RepetitiveSequence<NUMBER_OF_FLIP_FLOP_ICS> sequence2 = RepetitiveSequence<NUMBER_OF_FLIP_FLOP_ICS>(flipFlopRepetitiveStates, NUMBER_OF_STATES, flipFlopRepetitiveDelays);
+
 void StatesUpdate(Sequence<NUMBER_OF_FLIP_FLOP_ICS> &sequence, int lastState = -1);
 
 void setup() {
@@ -38,7 +45,8 @@ void setup() {
 }
 
 void loop() {
-  StatesUpdate(sequence1);
+  //StatesUpdate(sequence1);
+  StatesUpdate(sequence2, 4);
 }
 
 void StatesUpdate(Sequence<NUMBER_OF_FLIP_FLOP_ICS> &sequence, int lastState = -1){
