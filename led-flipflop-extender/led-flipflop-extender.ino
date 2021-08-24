@@ -29,7 +29,7 @@ FlipFlopsStates<NUMBER_OF_FLIP_FLOP_ICS> *sequence1FlipFlopStates = new FlipFlop
 StaticSequence<NUMBER_OF_FLIP_FLOP_ICS> sequence1 =  StaticSequence<NUMBER_OF_FLIP_FLOP_ICS>(sequence1FlipFlopStates, numberOfStates);
 
 const int NUMBER_OF_STATES = 4;
-int unifiedDelay = 1000;
+int unifiedDelay = 20;
 int flipFlopRepetitiveStates[NUMBER_OF_STATES] = {0b00000001, 0b00000100, 0b00010000, 0b01000000};
 int flipFlopRepetitiveDelays[NUMBER_OF_STATES] = {unifiedDelay, unifiedDelay, unifiedDelay, unifiedDelay};
 
@@ -45,19 +45,19 @@ void setup() {
 }
 
 void loop() {
-  //StatesUpdate(sequence1);
-  StatesUpdate(sequence2, 4);
+  StatesUpdate(sequence1);
+  //StatesUpdate(sequence2, 4);
 }
 
 void StatesUpdate(Sequence<NUMBER_OF_FLIP_FLOP_ICS> &sequence, int lastState = -1){
   unsigned long currentTime = millis();
 
   if(currentTime >= sequence.statesNextEventTime){
-    WriteState(sequence.GetState().ledsStates);
+    sequence.Next(lastState);
 
     sequence.statesNextEventTime = currentTime + sequence.GetState().period;
 
-    sequence.Next(lastState);
+    WriteState(sequence.GetState().ledsStates);
   }
 }
 

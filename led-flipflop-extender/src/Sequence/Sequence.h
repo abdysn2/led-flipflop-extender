@@ -45,7 +45,7 @@ template <int ArraySize>
 StaticSequence<ArraySize>::StaticSequence(FlipFlopsStates<ArraySize> staticStates[], int _sequenceLength) {
     this->sequence = staticStates;
     this->sequenceLength = _sequenceLength;
-    this->statesCurrentIndex = 0;
+    this->statesCurrentIndex = -1;
     this->statesNextEventTime = 0;
 }
 
@@ -99,7 +99,7 @@ RepetitiveSequence<ArraySize>::RepetitiveSequence(int _sequence[], int _sequence
     this->sequenceLength = _sequenceLength;
     this->sequenceDelays = _delays;
     this->currentFlipFlopIndex = 0;
-    this->currentSequenceIndex = 0;
+    this->currentSequenceIndex = -1;
     this->statesNextEventTime = 0;
 
     this->currentState.ledsStates[currentFlipFlopIndex] = sequence[0];
