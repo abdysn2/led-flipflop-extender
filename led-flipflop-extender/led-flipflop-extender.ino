@@ -48,30 +48,3 @@ void loop() {
   StatesUpdate(sequence1);
   //StatesUpdate(sequence2, 4);
 }
-
-void StatesUpdate(Sequence<NUMBER_OF_FLIP_FLOP_ICS> &sequence, int lastState = -1){
-  unsigned long currentTime = millis();
-
-  if(currentTime >= sequence.statesNextEventTime){
-    sequence.Next(lastState);
-
-    sequence.statesNextEventTime = currentTime + sequence.GetState().period;
-
-    WriteState(sequence.GetState().ledsStates);
-  }
-}
-
-bool WriteState(int *states){
-  return WriteState(states, 0, NUMBER_OF_FLIP_FLOP_ICS);
-}
-
-bool WriteState(int *states, int numberOfICs){
-    return WriteState(states, 0, numberOfICs);
-}
-
-bool WriteState(int *states, int start, int numberOfICs){
-  for(int i = start; i < (start + numberOfICs); i++){
-    if (!FlipFlopWrite(states[i], i))
-      return false;
-  }
-}

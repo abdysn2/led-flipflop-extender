@@ -40,3 +40,45 @@ void logToSerial(String msg, int _debugLevel)
     logSerial.println(msg);
   }
 }
+
+/*
+ * StatesUpdate(): A helper function to update the leds states based on the
+ * Sequence class. The Sequence class must implement Two functions: Next, and
+ * GetState. The next function is called to calculate the next state in the states
+ * sequence, and the GetState is used to fetch the current state of the sequence.
+ * The statesNextEventTime is used to determine whether or not it is time to update
+ * the states.
+*/
+void StatesUpdate(Sequence<NUMBER_OF_FLIP_FLOP_ICS> &sequence, int lastState = -1){
+  unsigned long currentTime = millis();
+
+  if(currentTime >= sequence.statesNextEventTime){
+    sequence.Next(lastState);
+
+    sequence.statesNextEventTime = currentTime + sequence.GetState().period;
+
+    WriteState(sequence.GetState().ledsStates);
+  }
+}
+
+bool WriteState(int *states){
+  return WriteState(states, 0, NUMBER_OF_FLIP_FLOP_ICS);
+}
+
+bool WriteState(int *states, int numberOfICs){
+    return WriteState(states, 0, numberOfICs);
+}
+
+/*
+ * WriteState(): is used to write states to the flipFlops, it accepts
+ * an array of integers, each integer represent a flipFlop IC pin configuration.
+ * to calculate the integer, convert it to binary, and the first eight digits are
+ * going to be written to the flipFlop
+*/
+
+bool WriteState(int *states, int start, int numberOfICs){
+  for(int i = start; i < (start + numberOfICs); i++){
+    if (!FlipFlopWrite(states[i], i))
+      return false;
+  }
+}
